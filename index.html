@@ -115,7 +115,7 @@
     <body onload="func()">
 
         <!-- This is the Nav Bar -->
-        <div class="navbar" id="homeNavBar" style="display: inline">
+        <div class="navbar" id="homeNavBar">
             <div class="dropdown">
                 <button class="dropbtn">
                     <div class="container">
@@ -130,25 +130,7 @@
                     <a href="#">Fork Me on GitHub</a>
                 </div>
             </div>
-            <a href="#" onclick="return encryptText();">CRYPText</a>
-        </div>
-
-        <div class="navbar" id="homeNavBar" style="display: none">
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <div class="container">
-                        <div class="bar1"></div>
-                        <div class="bar2"></div>
-                        <div class="bar3"></div>
-                    </div>
-                </button>
-                <div class="dropdown-content">
-                    <a href="#" onclick="return encryptText();">Create an Encrypted File</a>
-                    <a href="#">About</a>
-                    <a href="#">Fork Me on GitHub</a>
-                </div>
-            </div>
-            <a href="#home">CRYPText</a>
+            <a href="#home" onclick="return location.reload();">CRYPText</a>
         </div>
 
         <!-- This is the Embedded Content -->
@@ -268,7 +250,8 @@
         document.getElementById("encryptedSection").style.display = "inline";
         document.getElementById("passWordSection").style.display = "none";
         document.getElementById("decryptedSection").style.display = "none";
-        document.getElementById("homeNavBar").style.display = "none";
+        document.getElementById("textbox").value = "";
+        document.getElementById("passWord").value = "";
     }
 
 

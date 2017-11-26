@@ -76,7 +76,7 @@
         }
         .dropdown:hover .dropbtn
         {
-            background-color: red;
+            background-color: #c11;
         }
         .dropdown-content
         {
@@ -285,9 +285,25 @@
 
         <!-- This is the About section -->
         <div id="aboutSection" style="display:none">
-            <span id="forkongithub"><a href="https://github.com/Akhilsudh/CRYPText.git">
+            <span id="forkongithub"><a href="https://github.com/Akhilsudh/CRYPText">
                 Fork me on GitHub</a>
             </span>
+            <center>
+                <br>
+                <div class="card">
+                    <div class="cardContainer">
+                        <h1>This Content is Encrypted!!!</h1>
+                        <h2>Enter password to decrypt:<h2>
+                        <br>
+                        <input type="password" onKeyDown="if(event.keyCode==13) decryptText();" id="passPhrase" name="pass-phrase">
+                        <br>
+                        <br>
+                        <button id="decryptButton" onclick="decryptText()">OK</button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </center>
         </div>
     </body>
     <script>

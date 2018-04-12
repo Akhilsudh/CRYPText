@@ -15,3 +15,4 @@ Just clone this repo and run the cryptextApp.html file in the repo. This can be 
     
 ## Screenshots
 ![Intro_Screen](Screenshots/Intro.png)  ![Options](Screenshots/Options.png) ![EncryptText](Screenshots/EncryptText.png) ![DecryptText](Screenshots/DecryptText.png) ![EncryptImage](Screenshots/EncryptImage.png) ![DecryptImage](Screenshots/DecryptImage.png) ![About](Screenshots/About.png)
+ 

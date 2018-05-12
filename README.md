@@ -11,7 +11,7 @@ Any HTML5 supporting web-browser (Preferably Firefox / Chromium web-browser).
 Just clone this repo and run the cryptextApp.html file in the repo. This can be done by exectuting the following commands:
 
     git clone https://github.com/Akhilsudh/CRYPText.git
-    firefox cryptextApp.html #For-Firefox-Browser
+    firefox home.html
     
 ## Screenshots
 ![Intro_Screen](Screenshots/Intro.png)  ![Options](Screenshots/Options.png) ![EncryptText](Screenshots/EncryptText.png) ![DecryptText](Screenshots/DecryptText.png) ![EncryptImage](Screenshots/EncryptImage.png) ![DecryptImage](Screenshots/DecryptImage.png) ![About](Screenshots/About.png) 

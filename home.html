@@ -46,7 +46,8 @@
             background-color: #ffffff;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 100%;
+            width: 98%;
+            margin: 0 auto;
         }
         .cardAbout:hover
         {
@@ -232,8 +233,7 @@
                     </div>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="return encryptData('Text');">Create a New Encrypted File with Text</a>
-					<a href="#" onclick="return encryptData('Image');">Create a New Encrypted File with Image</a>
+                    <a href="#" onclick="return encryptData('Text');">Create a New Encrypted File</a>
                     <a href="#" onclick="return about();">About</a>
                 </div>
             </div>
@@ -279,19 +279,19 @@
                     <textarea rows="20" id="ClearText"></textarea>
 				<center>
 					<img ID="ClearImage"/>
-				<center>
-			</td>
-            Enter password:
+                </center>
+                Enter password:
 				<br>
-				<input type="text" id="passWordDec">
+				<input type="password" id="passWordDec">
 				<br>
             ReEnter password:
 				<br>
-				<input type="text" id="passWordDecConf">
+				<input type="password" id="passWordDecConf">
 				<br>
 				<br>
 				<button id="create" style="display: inline" onclick="encryptButton(false)">Generate file</button>
 				<a download="encrypted.html" id="downloadlink" style="display: none"></a>
+			</td>
 			<td width="2%"/>
 			</table>
 
@@ -323,11 +323,11 @@
 				</Div>
 				Enter password:
 				<br>
-				<input type="text" id="passWord">
+				<input type="password" id="passWord">
 				<br>
                 ReEnter password:
 				<br>
-				<input type="text" id="passWordConf">
+				<input type="password" id="passWordConf">
 				<br>
 				<br>
 				<button id="create" style="display: inline" onclick="encryptButton(true)">Generate file</button>
@@ -457,18 +457,24 @@ DEALINGS IN THE SOFTWARE.
             var textbox = document.getElementById('textbox');
             console.log("I am true")
             var imagebox = document.getElementById('imagebox');
-            var PW = document.getElementById("passWord").value;
-            var PWC = document.getElementById("passWordConf").value;
+            var PWE = document.getElementById("passWord");
+            var PWCE = document.getElementById("passWordConf");
+            var PW = PWE.value;
+            var PWC = PWCE.value;
         }
         else{
             var textbox = document.getElementById('ClearText');
             console.log(textbox.value)
             var imagebox = document.getElementById('ClearImage');
-            var PW = document.getElementById("passWordDec").value;
-            var PWC = document.getElementById("passWordDecConf").value;
+            var PWE = document.getElementById("passWordDec");
+            var PWCE = document.getElementById("passWordDecConf");
+            var PW = PWE.value;
+            var PWC = PWCE.value;
         }
         if(PW != PWC){
-            alert("Password missmatch");
+            PWE.value = "";
+            PWCE.value = "";
+            alert("Passwords do not match please reenter");
         }
         else {
             // Encrypt the text and embbed the encrypted information
@@ -511,7 +517,14 @@ DEALINGS IN THE SOFTWARE.
 			var decryptedText = CryptoJS.AES.decrypt(encryptedText,passPhrase);
 
 			if(encryptedDataType == "Text"){
-				document.getElementById("ClearText").innerHTML = decryptedText.toString(CryptoJS.enc.Utf8);
+				var setText = decryptedText.toString(CryptoJS.enc.Utf8);
+                if (setText == "") {
+                    document.getElementById("ClearText").innerHTML = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+                }
+                else{
+                    document.getElementById("ClearText").innerHTML = setText;
+                }
+                
 			}
 			else{
 				var imgebox = document.getElementById("ClearImage");

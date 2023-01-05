@@ -276,11 +276,22 @@
 				<center>
 					<h2>Decrypted Content</h2>
 				</center>
-					<pre ID="ClearText"></pre>
+                    <textarea rows="20" id="ClearText"></textarea>
 				<center>
 					<img ID="ClearImage"/>
 				<center>
 			</td>
+            Enter password:
+				<br>
+				<input type="text" id="passWordDec">
+				<br>
+            ReEnter password:
+				<br>
+				<input type="text" id="passWordDecConf">
+				<br>
+				<br>
+				<button id="create" style="display: inline" onclick="encryptButton(false)">Generate file</button>
+				<a download="encrypted.html" id="downloadlink" style="display: none"></a>
 			<td width="2%"/>
 			</table>
 
@@ -314,8 +325,12 @@
 				<br>
 				<input type="text" id="passWord">
 				<br>
+                ReEnter password:
 				<br>
-				<button id="create" style="display: inline">Generate file</button>
+				<input type="text" id="passWordConf">
+				<br>
+				<br>
+				<button id="create" style="display: inline" onclick="encryptButton(true)">Generate file</button>
 				<a download="encrypted.html" id="downloadlink" style="display: none"></a>
 			</td>
 			<td width="2%"/>
@@ -381,7 +396,7 @@ DEALINGS IN THE SOFTWARE.
 
 	// This is a Gloabla variable
 	var Template;
-	var bTextType = false;
+	var bTextType = true;
 
     function func()
     {
@@ -405,35 +420,78 @@ DEALINGS IN THE SOFTWARE.
 		///////////////////////////////////////////////////
 
         var create = document.getElementById('create');
-        create.addEventListener('click', function () {
+        // create.addEventListener('click', function () {
 
-				var link = document.getElementById('downloadlink');
-				var textbox = document.getElementById('textbox');
-				var imagebox = document.getElementById('imagebox');
+		// 		var link = document.getElementById('downloadlink');
+		// 		var textbox = document.getElementById('textbox');
+		// 		var imagebox = document.getElementById('imagebox');
 
-				// Encrypt the text and embbed the encrypted information
-				var PW = document.getElementById("passWord").value;
+		// 		// Encrypt the text and embbed the encrypted information
+		// 		var PW = document.getElementById("passWord").value;
 
-                var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
+        //         var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
 
-				var encryptedText = CryptoJS.AES.encrypt(TE,PW);
-				var HT = Template.replace("$$DA"+"TA$$",encryptedText);
-				HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
+		// 		var encryptedText = CryptoJS.AES.encrypt(TE,PW);
+		// 		var HT = Template.replace("$$DA"+"TA$$",encryptedText);
+		// 		HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
 
-				var bb = new Blob([HT], {type : 'text/html'});
+		// 		var bb = new Blob([HT], {type : 'text/html'});
 
-				URL.revokeObjectURL(link.href);
-				link.href = URL.createObjectURL(bb);
+		// 		URL.revokeObjectURL(link.href);
+		// 		link.href = URL.createObjectURL(bb);
 
-				if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-						window.navigator.msSaveBlob(bb, link.download);
-				}
-				else if(document.createEvent){
-                    var e = document.createEvent('MouseEvents');
-                    e.initEvent( 'click', true, true );
-                    link.dispatchEvent(e);
-                }
-            }, false);
+		// 		if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+		// 				window.navigator.msSaveBlob(bb, link.download);
+		// 		}
+		// 		else if(document.createEvent){
+        //             var e = document.createEvent('MouseEvents');
+        //             e.initEvent( 'click', true, true );
+        //             link.dispatchEvent(e);
+        //         }
+        //     }, false);
+    }
+
+    function encryptButton(flag) {
+        var link = document.getElementById('downloadlink');
+        if(flag){
+            var textbox = document.getElementById('textbox');
+            console.log("I am true")
+            var imagebox = document.getElementById('imagebox');
+            var PW = document.getElementById("passWord").value;
+            var PWC = document.getElementById("passWordConf").value;
+        }
+        else{
+            var textbox = document.getElementById('ClearText');
+            console.log(textbox.value)
+            var imagebox = document.getElementById('ClearImage');
+            var PW = document.getElementById("passWordDec").value;
+            var PWC = document.getElementById("passWordDecConf").value;
+        }
+        if(PW != PWC){
+            alert("Password missmatch");
+        }
+        else {
+            // Encrypt the text and embbed the encrypted information
+        var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
+
+        var encryptedText = CryptoJS.AES.encrypt(TE,PW);
+        var HT = Template.replace("$$DA"+"TA$$",encryptedText);
+        HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
+
+        var bb = new Blob([HT], {type : 'text/html'});
+
+        URL.revokeObjectURL(link.href);
+        link.href = URL.createObjectURL(bb);
+
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(bb, link.download);
+        }
+        else if(document.createEvent){
+            var e = document.createEvent('MouseEvents');
+            e.initEvent( 'click', true, true );
+            link.dispatchEvent(e);
+        }
+        }
     }
 
     function mainFunc()

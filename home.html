@@ -253,7 +253,7 @@
                     <div class="cardContainer">
                         <center>
                             <h1>This Content is Encrypted!!!</h1>
-                            <h2>Enter password to decrypt:<h2>
+                            <h3>Enter password to decrypt:<h3>
                             <br>
                             <input type="password" onKeyDown="if(event.keyCode==13) decryptText();" id="passPhrase" name="pass-phrase">
                             <br>
@@ -349,23 +349,42 @@
                 <div class="cardAboutContainer">
                     <h1>About <i>CRYPText</i></h1>
                     <p>
-                        CRYPText is a tool that helps in encrypting content (Text/Image) and generate a self
-                        sufficient file that is capable of decrytping it with a previously
+                        CRYPText is a tool that helps in encrypting text content and generate a self
+                        sufficient file that is capable of decrypting it with a previously
                         specified password and also capable of encrypting new content into
-                        another file.
+                        another file. The encryption and decryption happens locally, and can open on 
+                        any device that can open a html file.
                     </p>
+                    <button>hello</button>
                     <p>
                         CRYPText uses <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">
                         AES(Advanced Encryption Standard)</a>. It is a symmetric key algorithm meaning that
                         it uses the same password to decrypt a previously encryted file. This is achieved
                         using <a href="https://code.google.com/archive/p/crypto-js/">CryptoJS</a>.
                     </p>
+                    <h2>How to use it?</h2>
+                    <h3>To Encrypt:</h3>    
+                    <ol>
+                        <li>Download this file from <a href="https://github.com/Akhilsudh/CRYPText">here</a></li>
+                        <li>Click on the hamburger menu and choose <b>'Create a New Encrypted File'</b></li>
+                        <li>Enter the contents that need to be encrypted in the edit field</li>
+                        <li>Enter a password and confirm the same in the second field</li>
+                        <li>Click on generate file to generate a new html file that has the content encrypted</li>
+                    </ol>
+                    <h3>To Decrypt:</h3>    
+                    <ol>
+                        <li>Once the html file is opened you would be greeted with a password field</li>
+                        <li>Enter the password and then click on <b>OK</b></li>
+                        <li>You should see the content in the decrypted section only if the password was correct</li>
+                        <li>This field is editable and can be redited</li>
+                        <li>To save changes, you can enter a new password and confirm the same. Once done click on <b>Generate file</b> to create a new file with the new content</li>
+                    </ol>
                     <h2>LICENSE:</h2>
                     <div class="scroll-box">
                         <pre>
 MIT License
 
-Copyright (c) 2017 Akhil Sudhakaran
+Copyright (c) 2023 Akhil Sudhakaran
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -384,7 +403,6 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
-
                         </pre>
                     </div>
                 </div>
@@ -413,42 +431,11 @@ DEALINGS IN THE SOFTWARE.
 		document.getElementById("ENCRYPTED_DATA").innerHTML = ED;
 		document.getElementById("ENCRYPTED_DATA_TYPE").innerHTML = EDT;
 
-
 		document.getElementById("passWordSection").style.display = "inline";
         document.getElementById("encryptedSection").style.display = "none";
 		document.getElementById("passPhrase").focus();
-		///////////////////////////////////////////////////
 
         var create = document.getElementById('create');
-        // create.addEventListener('click', function () {
-
-		// 		var link = document.getElementById('downloadlink');
-		// 		var textbox = document.getElementById('textbox');
-		// 		var imagebox = document.getElementById('imagebox');
-
-		// 		// Encrypt the text and embbed the encrypted information
-		// 		var PW = document.getElementById("passWord").value;
-
-        //         var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
-
-		// 		var encryptedText = CryptoJS.AES.encrypt(TE,PW);
-		// 		var HT = Template.replace("$$DA"+"TA$$",encryptedText);
-		// 		HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
-
-		// 		var bb = new Blob([HT], {type : 'text/html'});
-
-		// 		URL.revokeObjectURL(link.href);
-		// 		link.href = URL.createObjectURL(bb);
-
-		// 		if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-		// 				window.navigator.msSaveBlob(bb, link.download);
-		// 		}
-		// 		else if(document.createEvent){
-        //             var e = document.createEvent('MouseEvents');
-        //             e.initEvent( 'click', true, true );
-        //             link.dispatchEvent(e);
-        //         }
-        //     }, false);
     }
 
     function encryptButton(flag) {
@@ -478,25 +465,25 @@ DEALINGS IN THE SOFTWARE.
         }
         else {
             // Encrypt the text and embbed the encrypted information
-        var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
+            var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
 
-        var encryptedText = CryptoJS.AES.encrypt(TE,PW);
-        var HT = Template.replace("$$DA"+"TA$$",encryptedText);
-        HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
+            var encryptedText = CryptoJS.AES.encrypt(TE,PW);
+            var HT = Template.replace("$$DA"+"TA$$",encryptedText);
+            HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
 
-        var bb = new Blob([HT], {type : 'text/html'});
+            var bb = new Blob([HT], {type : 'text/html'});
 
-        URL.revokeObjectURL(link.href);
-        link.href = URL.createObjectURL(bb);
+            URL.revokeObjectURL(link.href);
+            link.href = URL.createObjectURL(bb);
 
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveBlob(bb, link.download);
-        }
-        else if(document.createEvent){
-            var e = document.createEvent('MouseEvents');
-            e.initEvent( 'click', true, true );
-            link.dispatchEvent(e);
-        }
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveBlob(bb, link.download);
+            }
+            else if(document.createEvent){
+                var e = document.createEvent('MouseEvents');
+                e.initEvent( 'click', true, true );
+                link.dispatchEvent(e);
+            }
         }
     }
 

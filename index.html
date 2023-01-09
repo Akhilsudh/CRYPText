@@ -46,7 +46,8 @@
             background-color: #ffffff;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
-            width: 100%;
+            width: 98%;
+            margin: 0 auto;
         }
         .cardAbout:hover
         {
@@ -232,8 +233,7 @@
                     </div>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="return encryptData('Text');">Create a New Encrypted File with Text</a>
-					<a href="#" onclick="return encryptData('Image');">Create a New Encrypted File with Image</a>
+                    <a href="#" onclick="return encryptData('Text');">Create a New Encrypted File</a>
                     <a href="#" onclick="return about();">About</a>
                 </div>
             </div>
@@ -253,7 +253,7 @@
                     <div class="cardContainer">
                         <center>
                             <h1>This Content is Encrypted!!!</h1>
-                            <h2>Enter password to decrypt:<h2>
+                            <h3>Enter password to decrypt:<h3>
                             <br>
                             <input type="password" onKeyDown="if(event.keyCode==13) decryptText();" id="passPhrase" name="pass-phrase">
                             <br>
@@ -276,10 +276,21 @@
 				<center>
 					<h2>Decrypted Content</h2>
 				</center>
-					<pre ID="ClearText"></pre>
+                    <textarea rows="20" id="ClearText"></textarea>
 				<center>
 					<img ID="ClearImage"/>
-				<center>
+                </center>
+                Enter password:
+				<br>
+				<input type="password" id="passWordDec">
+				<br>
+            ReEnter password:
+				<br>
+				<input type="password" id="passWordDecConf">
+				<br>
+				<br>
+				<button id="create" style="display: inline" onclick="encryptButton(false)">Generate file</button>
+				<a download="encrypted.html" id="downloadlink" style="display: none"></a>
 			</td>
 			<td width="2%"/>
 			</table>
@@ -312,10 +323,14 @@
 				</Div>
 				Enter password:
 				<br>
-				<input type="text" id="passWord">
+				<input type="password" id="passWord">
+				<br>
+                ReEnter password:
+				<br>
+				<input type="password" id="passWordConf">
 				<br>
 				<br>
-				<button id="create" style="display: inline">Generate file</button>
+				<button id="create" style="display: inline" onclick="encryptButton(true)">Generate file</button>
 				<a download="encrypted.html" id="downloadlink" style="display: none"></a>
 			</td>
 			<td width="2%"/>
@@ -334,23 +349,42 @@
                 <div class="cardAboutContainer">
                     <h1>About <i>CRYPText</i></h1>
                     <p>
-                        CRYPText is a tool that helps in encrypting content (Text/Image) and generate a self
-                        sufficient file that is capable of decrytping it with a previously
+                        CRYPText is a tool that helps in encrypting text content and generate a self
+                        sufficient file that is capable of decrypting it with a previously
                         specified password and also capable of encrypting new content into
-                        another file.
+                        another file. The encryption and decryption happens locally, and can open on 
+                        any device that can open a html file.
                     </p>
+                    <button>hello</button>
                     <p>
                         CRYPText uses <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">
                         AES(Advanced Encryption Standard)</a>. It is a symmetric key algorithm meaning that
                         it uses the same password to decrypt a previously encryted file. This is achieved
                         using <a href="https://code.google.com/archive/p/crypto-js/">CryptoJS</a>.
                     </p>
+                    <h2>How to use it?</h2>
+                    <h3>To Encrypt:</h3>    
+                    <ol>
+                        <li>Download this file from <a href="https://github.com/Akhilsudh/CRYPText">here</a></li>
+                        <li>Click on the hamburger menu and choose <b>'Create a New Encrypted File'</b></li>
+                        <li>Enter the contents that need to be encrypted in the edit field</li>
+                        <li>Enter a password and confirm the same in the second field</li>
+                        <li>Click on generate file to generate a new html file that has the content encrypted</li>
+                    </ol>
+                    <h3>To Decrypt:</h3>    
+                    <ol>
+                        <li>Once the html file is opened you would be greeted with a password field</li>
+                        <li>Enter the password and then click on <b>OK</b></li>
+                        <li>You should see the content in the decrypted section only if the password was correct</li>
+                        <li>This field is editable and can be redited</li>
+                        <li>To save changes, you can enter a new password and confirm the same. Once done click on <b>Generate file</b> to create a new file with the new content</li>
+                    </ol>
                     <h2>LICENSE:</h2>
                     <div class="scroll-box">
                         <pre>
 MIT License
 
-Copyright (c) 2017 Akhil Sudhakaran
+Copyright (c) 2023 Akhil Sudhakaran
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -369,7 +403,6 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
-
                         </pre>
                     </div>
                 </div>
@@ -381,7 +414,7 @@ DEALINGS IN THE SOFTWARE.
 
 	// This is a Gloabla variable
 	var Template;
-	var bTextType = false;
+	var bTextType = true;
 
     function func()
     {
@@ -398,42 +431,60 @@ DEALINGS IN THE SOFTWARE.
 		document.getElementById("ENCRYPTED_DATA").innerHTML = ED;
 		document.getElementById("ENCRYPTED_DATA_TYPE").innerHTML = EDT;
 
-
 		document.getElementById("passWordSection").style.display = "inline";
         document.getElementById("encryptedSection").style.display = "none";
 		document.getElementById("passPhrase").focus();
-		///////////////////////////////////////////////////
 
         var create = document.getElementById('create');
-        create.addEventListener('click', function () {
+    }
 
-				var link = document.getElementById('downloadlink');
-				var textbox = document.getElementById('textbox');
-				var imagebox = document.getElementById('imagebox');
+    function encryptButton(flag) {
+        var link = document.getElementById('downloadlink');
+        if(flag){
+            var textbox = document.getElementById('textbox');
+            console.log("I am true")
+            var imagebox = document.getElementById('imagebox');
+            var PWE = document.getElementById("passWord");
+            var PWCE = document.getElementById("passWordConf");
+            var PW = PWE.value;
+            var PWC = PWCE.value;
+        }
+        else{
+            var textbox = document.getElementById('ClearText');
+            console.log(textbox.value)
+            var imagebox = document.getElementById('ClearImage');
+            var PWE = document.getElementById("passWordDec");
+            var PWCE = document.getElementById("passWordDecConf");
+            var PW = PWE.value;
+            var PWC = PWCE.value;
+        }
+        if(PW != PWC){
+            PWE.value = "";
+            PWCE.value = "";
+            alert("Passwords do not match please reenter");
+        }
+        else {
+            // Encrypt the text and embbed the encrypted information
+            var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
 
-				// Encrypt the text and embbed the encrypted information
-				var PW = document.getElementById("passWord").value;
+            var encryptedText = CryptoJS.AES.encrypt(TE,PW);
+            var HT = Template.replace("$$DA"+"TA$$",encryptedText);
+            HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
 
-                var TE = (bTextType)?textbox.value:imagebox.getAttribute("src");
+            var bb = new Blob([HT], {type : 'text/html'});
 
-				var encryptedText = CryptoJS.AES.encrypt(TE,PW);
-				var HT = Template.replace("$$DA"+"TA$$",encryptedText);
-				HT = HT.replace("$$TY"+"PE$$",(bTextType)?"Text":"Image");
+            URL.revokeObjectURL(link.href);
+            link.href = URL.createObjectURL(bb);
 
-				var bb = new Blob([HT], {type : 'text/html'});
-
-				URL.revokeObjectURL(link.href);
-				link.href = URL.createObjectURL(bb);
-
-				if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-						window.navigator.msSaveBlob(bb, link.download);
-				}
-				else if(document.createEvent){
-                    var e = document.createEvent('MouseEvents');
-                    e.initEvent( 'click', true, true );
-                    link.dispatchEvent(e);
-                }
-            }, false);
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveBlob(bb, link.download);
+            }
+            else if(document.createEvent){
+                var e = document.createEvent('MouseEvents');
+                e.initEvent( 'click', true, true );
+                link.dispatchEvent(e);
+            }
+        }
     }
 
     function mainFunc()
@@ -453,7 +504,14 @@ DEALINGS IN THE SOFTWARE.
 			var decryptedText = CryptoJS.AES.decrypt(encryptedText,passPhrase);
 
 			if(encryptedDataType == "Text"){
-				document.getElementById("ClearText").innerHTML = decryptedText.toString(CryptoJS.enc.Utf8);
+				var setText = decryptedText.toString(CryptoJS.enc.Utf8);
+                if (setText == "") {
+                    document.getElementById("ClearText").innerHTML = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+                }
+                else{
+                    document.getElementById("ClearText").innerHTML = setText;
+                }
+                
 			}
 			else{
 				var imgebox = document.getElementById("ClearImage");

@@ -1,5 +1,5 @@
 # CRYPText
-[![HerokuApp](https://img.shields.io/badge/heroku-link-9d82c4.svg)](https://cryptextapp.herokuapp.com/) ![Platform](https://img.shields.io/badge/platform-web%20platform-orange.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Deployed App](https://img.shields.io/badge/app-link-9d82c4.svg)](https://akhilsudh.github.io/CRYPText/) ![Platform](https://img.shields.io/badge/platform-web%20platform-orange.svg) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 CRYPText is a tool that helps in encrypting content (Text/Image) and generate a self sufficient file that is capable of decrypting it with a previously specified password and also capable of encrypting new content into another file.
 
@@ -14,22 +14,8 @@ Just clone this repo and run the cryptextApp.html file in the repo. Select the n
 
 ### Text encryption
 
-- Incase of encryting text, enter the content in the edit box and specify the password to encrypt it. This will generate another `.html` file that you could share.
-![EncryptText](Screenshots/EncryptText.png)
+- Incase of encryting text, enter the content in the edit box and specify the password to encrypt it. This will generate another `.html` file that you could share. </br> ![EncryptText](Screenshots/EncryptText.png)
 
-- This `.html` file would promt a password
-![Intro_Screen](Screenshots/Intro.png) 
+- This `.html` file would promt a password </br> ![Intro_Screen](Screenshots/Intro.png) 
 
-- Upon entering the contents of the encrypted file would come up like this:
-![DecryptText](Screenshots/DecryptText.png)
-
-### Image encryption
-
-- Incase of encryting images, upload the image and specify the password to encrypt it. This will generate another `.html` file that you could share.
-![EncryptImage](Screenshots/EncryptImage.png)
-
-- This `.html` file would promt a password
-![Intro_Screen](Screenshots/Intro.png) 
-
-- Upon entering the contents of the encrypted file would come up like this:
-![DecryptImage](Screenshots/DecryptImage.png)
+- Upon entering the contents of the encrypted file would come up like this:</br> ![DecryptText](Screenshots/DecryptText.png)
